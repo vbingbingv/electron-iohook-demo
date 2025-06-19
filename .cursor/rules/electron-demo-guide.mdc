@@ -1,0 +1,121 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Electron Demo 项目导航指南
+
+这是一个功能完整的 Electron 演示应用程序，展示了现代桌面应用开发的最佳实践。
+
+## 项目架构概览
+
+### 核心文件说明
+
+- **[main.js](mdc:main.js)** - 主进程入口文件，负责：
+  - 创建和管理应用窗口
+  - 处理应用生命周期事件
+  - 设置菜单和快捷键
+  - 提供 IPC 通信处理器
+
+- **[preload.js](mdc:preload.js)** - 预加载脚本，提供：
+  - 安全的渲染进程与主进程通信接口
+  - 上下文隔离的 API 暴露
+  - 防止直接访问 Node.js API
+
+- **[index.html](mdc:index.html)** - 主界面文件，包含：
+  - 应用的完整用户界面结构
+  - 四个主要功能页面的HTML内容
+  - 响应式布局设计
+
+- **[renderer.js](mdc:renderer.js)** - 渲染进程脚本，实现：
+  - 用户界面交互逻辑
+  - 页面切换和状态管理
+  - 与主进程的安全通信
+  - 主题切换功能
+
+- **[styles.css](mdc:styles.css)** - 样式表，提供：
+  - 现代化的界面设计
+  - 明暗主题支持（CSS变量驱动）
+  - 响应式布局
+  - 丰富的交互效果
+
+- **[package.json](mdc:package.json)** - 项目配置文件，定义：
+  - 应用元数据和依赖
+  - 构建和运行脚本
+  - Electron Builder 配置
+
+## 功能模块说明
+
+### 1. 主题系统
+- 位置：`renderer.js` 中的 `toggleTheme()` 方法
+- CSS变量定义在 `styles.css` 的 `:root` 和 `[data-theme="dark"]` 选择器中
+- 支持明亮/暗色主题无缝切换
+
+### 2. 文件操作模块
+- 主进程文件处理：`main.js` 中的文件对话框IPC处理器
+- 渲染进程UI：`index.html` 中的文件操作页面
+- 交互逻辑：`renderer.js` 中的文件相关方法
+
+### 3. 系统信息模块
+- 数据获取：`renderer.js` 中的 `loadSystemInfo()` 方法
+- 显示界面：`index.html` 中的系统信息页面
+- 包含应用版本、Electron版本、系统平台等信息
+
+### 4. 通知系统
+- 桌面通知：使用浏览器原生 Notification API
+- 系统对话框：通过主进程的 dialog 模块实现
+- 多种通知类型支持（信息、成功、警告、错误）
+
+## 开发最佳实践
+
+### 安全性
+- 禁用 `nodeIntegration`
+- 启用 `contextIsolation`
+- 使用预加载脚本进行安全的进程间通信
+- 禁用远程模块
+
+### 代码结构
+- 主进程代码集中在 `main.js`
+- 渲染进程逻辑采用类的形式组织
+- IPC通信使用 `invoke/handle` 模式
+- 事件监听器合理组织和管理
+
+### 界面设计
+- 使用现代CSS特性（CSS Grid、Flexbox、CSS变量）
+- 响应式设计适配不同屏幕尺寸
+- 一致的设计语言和交互模式
+- 无障碍访问支持
+
+## 常用开发任务
+
+### 添加新页面
+1. 在 `index.html` 中添加新的 `.tab-content` 区域
+2. 在侧边栏添加对应的导航按钮
+3. 在 `renderer.js` 中添加页面切换逻辑
+4. 在 `styles.css` 中添加页面样式
+
+### 添加IPC通信
+1. 在 `main.js` 中使用 `ipcMain.handle()` 注册处理器
+2. 在 `preload.js` 中暴露安全的API接口
+3. 在 `renderer.js` 中调用暴露的API
+
+### 自定义主题
+1. 修改 `styles.css` 中的CSS变量值
+2. 为暗色主题添加对应的变量覆盖
+3. 确保所有UI组件都使用CSS变量
+
+### 构建和分发
+- 开发模式：`npm run dev`
+- 生产构建：`npm run build`
+- 创建安装包：`npm run dist`
+
+## 项目特色
+
+- 📱 **响应式设计** - 界面自适应不同窗口大小
+- 🎨 **现代化UI** - 使用最新的设计趋势和交互模式
+- 🔒 **安全架构** - 遵循Electron安全最佳实践
+- 🚀 **高性能** - 优化的资源加载和渲染性能
+- 🛠️ **易于扩展** - 清晰的代码结构便于功能扩展
+
+这个项目展示了如何构建一个功能完整、安全可靠的现代桌面应用程序。
+

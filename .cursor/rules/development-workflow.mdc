@@ -1,0 +1,167 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Electron Demo 开发工作流程
+
+## 快速开始
+
+### 环境准备
+1. 确保已安装 Node.js (18.x+)
+2. 克隆或下载项目到本地
+3. 运行 `npm install` 安装依赖
+4. 运行 `npm run dev` 启动开发模式
+
+### 项目结构理解
+参考主要文件：
+- [main.js](mdc:main.js) - 主进程逻辑
+- [renderer.js](mdc:renderer.js) - 渲染进程逻辑  
+- [preload.js](mdc:preload.js) - 安全通信层
+- [index.html](mdc:index.html) - 主界面
+- [styles.css](mdc:styles.css) - 样式定义
+
+## 开发模式
+
+### 启动开发服务器
+```bash
+npm run dev
+```
+这将启动应用并自动打开开发者工具，支持热重载。
+
+### 调试技巧
+- 主进程调试：使用 `console.log()` 在终端查看输出
+- 渲染进程调试：在开发者工具的Console面板查看
+- IPC通信调试：在两个进程中都添加日志输出
+
+## 添加新功能
+
+### 1. 添加新的UI页面
+```javascript
+// 在 index.html 中添加新页面
+<div id="new-feature" class="tab-content">
+  <h2>新功能</h2>
+  <!-- 页面内容 -->
+</div>
+
+// 在侧边栏添加导航
+<button class="nav-item" data-tab="new-feature">新功能</button>
+```
+
+### 2. 添加样式
+在 [styles.css](mdc:styles.css) 中为新功能添加样式，确保使用CSS变量以支持主题切换。
+
+### 3. 添加交互逻辑
+在 [renderer.js](mdc:renderer.js) 的 `setupEventListeners()` 方法中添加事件监听器。
+
+### 4. 添加主进程功能
+如果需要访问系统API，在 [main.js](mdc:main.js) 中添加IPC处理器：
+```javascript
+ipcMain.handle('new-feature-api', async (event, data) => {
+  // 处理逻辑
+  return result;
+});
+```
+
+然后在 [preload.js](mdc:preload.js) 中暴露安全接口：
+```javascript
+contextBridge.exposeInMainWorld('electronAPI', {
+  newFeatureApi: (data) => ipcRenderer.invoke('new-feature-api', data)
+});
+```
+
+## 样式开发
+
+### 主题系统
+- 使用CSS变量定义颜色和尺寸
+- 明亮主题变量定义在 `:root` 中
+- 暗色主题变量定义在 `[data-theme="dark"]` 中
+
+### 响应式设计
+- 使用媒体查询适配不同屏幕尺寸
+- 移动优先的设计理念
+- Flexbox和Grid布局的合理使用
+
+### 组件样式
+- 保持一致的设计语言
+- 使用统一的间距和圆角规范
+- 悬停和焦点状态的交互反馈
+
+## 测试和调试
+
+### 功能测试
+1. 测试所有页面的导航功能
+2. 验证主题切换是否正常工作
+3. 检查文件操作功能
+4. 确认通知系统正常运行
+5. 测试快捷键功能
+
+### 兼容性测试
+- Windows 10/11
+- macOS 10.14+
+- Linux (Ubuntu, CentOS等)
+
+### 性能测试
+- 检查内存使用情况
+- 测试窗口调整性能
+- 验证大文件处理能力
+
+## 构建和分发
+
+### 开发构建
+```bash
+npm run build
+```
+
+### 创建安装包
+```bash
+npm run dist
+```
+这将在 `dist` 目录生成对应平台的安装包。
+
+### 自定义构建配置
+在 [package.json](mdc:package.json) 的 `build` 字段中修改构建选项：
+- 应用图标
+- 安装包名称
+- 输出目录
+- 包含/排除的文件
+
+## 代码规范
+
+### JavaScript
+- 使用ES6+语法
+- 采用类的形式组织代码
+- 合理的错误处理
+- 清晰的注释说明
+
+### CSS
+- 使用CSS变量管理主题
+- 语义化的类名
+- 合理的选择器层级
+- 响应式设计原则
+
+### HTML
+- 语义化标签的使用
+- 合理的标签层级结构
+- 无障碍访问属性
+- 清晰的ID和类名
+
+## 常见问题解决
+
+### 依赖安装失败
+- 清除缓存：`npm cache clean --force`
+- 删除node_modules重新安装
+- 检查网络连接和镜像源
+
+### 应用启动失败
+- 检查main.js中的路径是否正确
+- 确认所有必需文件都存在
+- 查看控制台错误信息
+
+### 构建失败
+- 检查package.json配置
+- 确认所有依赖都已安装
+- 验证构建脚本是否正确
+
+这个工作流程将帮助你高效地开发和维护Electron应用程序。
+

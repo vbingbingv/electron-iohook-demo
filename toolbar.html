@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具栏</title>
+    <link rel="stylesheet" href="toolbar-styles.css">
+</head>
+<body>
+    <div class="toolbar-container">
+        <!-- 拖拽区域 -->
+        <div class="drag-area"></div>
+        
+        <!-- 工具栏按钮组 -->
+        <div class="toolbar-buttons">
+            <button class="tool-btn translate-btn" title="翻译选中文本">
+                <span class="btn-icon">🌐</span>
+                <span class="btn-text">翻译</span>
+            </button>
+            
+            <button class="tool-btn copy-btn" title="复制到剪贴板">
+                <span class="btn-icon">📋</span>
+                <span class="btn-text">复制</span>
+            </button>
+            
+            <button class="tool-btn search-btn" title="搜索">
+                <span class="btn-icon">🔍</span>
+                <span class="btn-text">搜索</span>
+            </button>
+            
+            <button class="tool-btn note-btn" title="添加笔记">
+                <span class="btn-icon">📝</span>
+                <span class="btn-text">笔记</span>
+            </button>
+            
+            <button class="tool-btn save-btn" title="保存">
+                <span class="btn-icon">💾</span>
+                <span class="btn-text">保存</span>
+            </button>
+            
+            <button class="tool-btn share-btn" title="分享">
+                <span class="btn-icon">📤</span>
+                <span class="btn-text">分享</span>
+            </button>
+        </div>
+        
+        <!-- 控制按钮 -->
+        <div class="toolbar-controls">
+            <button class="control-btn minimize-btn" title="最小化">−</button>
+            <button class="control-btn close-btn" title="关闭">×</button>
+        </div>
+    </div>
+
+    <script src="toolbar-renderer.js"></script>
+</body>
+</html> 

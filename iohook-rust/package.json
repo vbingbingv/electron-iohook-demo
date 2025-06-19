@@ -1,0 +1,41 @@
+{
+  "name": "@haier/iohook-rust",
+  "version": "1.0.3",
+  "description": "iohook written in rust for node usage",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "type": "commonjs",
+  "scripts": {
+    "test": "cargo test",
+    "cargo-build": "cargo build --message-format=json-render-diagnostics > cargo.log",
+    "postcargo-build": "neon dist < cargo.log && node package.js",
+    "debug": "npm run cargo-build --",
+    "build": "npm run cargo-build -- --release",
+    "prepublishOnly": "npm run build"
+  },
+  "sideEffects": false,
+  "author": "lengfangbing@haier.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@neon-rs/cli": "0.1.82"
+  },
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "selection-hook.js",
+    "build"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://hgit.haier.net/S04714/iohook-rust"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.haier.net/repository/dts-npm/"
+  },
+  "keywords": [
+    "iohook",
+    "node",
+    "electron",
+    "rust"
+  ]
+}

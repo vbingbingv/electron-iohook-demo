@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electron Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部导航 -->
+        <header class="app-header">
+            <h1>🚀 Electron Demo</h1>
+            <div class="header-actions">
+                <button id="theme-toggle" class="btn btn-secondary">🌙</button>
+                <button id="about-btn" class="btn btn-primary">关于</button>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="app-main">
+            <div class="sidebar">
+                <h3>功能列表</h3>
+                <nav class="nav-menu">
+                    <button class="nav-item active" data-tab="welcome">欢迎</button>
+                    <button class="nav-item" data-tab="file-operations">文件操作</button>
+                    <button class="nav-item" data-tab="system-info">系统信息</button>
+                    <button class="nav-item" data-tab="notifications">通知</button>
+                    <button class="nav-item" data-tab="text-selection">文本选择</button>
+                    <button id="open-toolbar" class="nav-item toolbar-button">🛠️ 打开工具栏</button>
+                </nav>
+            </div>
+
+            <div class="content-area">
+                <!-- 欢迎页面 -->
+                <div id="welcome" class="tab-content active">
+                    <div class="welcome-content">
+                        <h2>欢迎使用 Electron Demo! 👋</h2>
+                        <p>这是一个使用 Electron 构建的演示应用程序，展示了桌面应用开发的基本功能。</p>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h3>📁 文件操作</h3>
+                                <p>演示文件的读取、写入和管理功能</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>💻 系统信息</h3>
+                                <p>获取和显示系统相关信息</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>🔔 通知系统</h3>
+                                <p>展示桌面通知功能</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>🎨 主题切换</h3>
+                                <p>支持明暗主题切换</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>📝 文本选择监听</h3>
+                                <p>实时监听系统文本选择事件</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>🛠️ 浮动工具栏</h3>
+                                <p>便捷的常用功能工具栏窗口</p>
+                            </div>
+                        </div>
+
+                        <div class="getting-started">
+                            <h3>快速开始</h3>
+                            <ol>
+                                <li>点击左侧菜单探索不同功能</li>
+                                <li>使用顶部菜单访问文件操作</li>
+                                <li>尝试切换主题模式</li>
+                                <li>查看应用程序信息</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 文件操作页面 -->
+                <div id="file-operations" class="tab-content">
+                    <h2>文件操作演示</h2>
+                    <div class="file-operations-content">
+                        <div class="operation-section">
+                            <h3>文本编辑器</h3>
+                            <textarea id="text-editor" placeholder="在此输入文本内容..."></textarea>
+                            <div class="button-group">
+                                <button id="save-file" class="btn btn-primary">保存文件</button>
+                                <button id="clear-editor" class="btn btn-secondary">清空</button>
+                            </div>
+                        </div>
+                        
+                        <div class="operation-section">
+                            <h3>文件信息</h3>
+                            <div id="file-info" class="info-display">
+                                选择或创建文件后，相关信息将显示在这里
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 系统信息页面 -->
+                <div id="system-info" class="tab-content">
+                    <h2>系统信息</h2>
+                    <div class="system-info-content">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>应用版本:</label>
+                                <span id="app-version">加载中...</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Electron 版本:</label>
+                                <span id="electron-version">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Node.js 版本:</label>
+                                <span id="node-version">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Chrome 版本:</label>
+                                <span id="chrome-version">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>操作系统:</label>
+                                <span id="platform">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>用户代理:</label>
+                                <span id="user-agent">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通知页面 -->
+                <div id="notifications" class="tab-content">
+                    <h2>通知演示</h2>
+                    <div class="notifications-content">
+                        <div class="notification-section">
+                            <h3>桌面通知</h3>
+                            <div class="button-group">
+                                <button id="show-info-notification" class="btn btn-info">信息通知</button>
+                                <button id="show-success-notification" class="btn btn-success">成功通知</button>
+                                <button id="show-warning-notification" class="btn btn-warning">警告通知</button>
+                                <button id="show-error-notification" class="btn btn-danger">错误通知</button>
+                            </div>
+                        </div>
+
+                        <div class="notification-section">
+                            <h3>对话框</h3>
+                            <div class="button-group">
+                                <button id="show-info-dialog" class="btn btn-primary">信息对话框</button>
+                                <button id="show-question-dialog" class="btn btn-secondary">确认对话框</button>
+                                <button id="show-warning-dialog" class="btn btn-warning">警告对话框</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 文本选择页面 -->
+                <div id="text-selection" class="tab-content">
+                    <h2>文本选择监听</h2>
+                    <div class="text-selection-content">
+                        <div class="selection-status">
+                            <div class="status-indicator">
+                                <span id="selection-status-text">等待文本选择...</span>
+                                <div id="selection-indicator" class="indicator-dot"></div>
+                            </div>
+                            <button id="clear-selection-log" class="btn btn-secondary">清空日志</button>
+                        </div>
+
+                        <div class="selection-info-section">
+                            <h3>当前选择信息</h3>
+                            <div class="current-selection-info">
+                                <div class="info-row">
+                                    <label>选中文本:</label>
+                                    <span id="current-text" class="selection-text">无</span>
+                                </div>
+                                <div class="info-row">
+                                    <label>窗口标题:</label>
+                                    <span id="current-window-title">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <label>进程ID:</label>
+                                    <span id="current-process-id">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <label>选择时间:</label>
+                                    <span id="current-selection-time">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="selection-log-section">
+                            <div class="log-header">
+                                <h3>选择历史记录</h3>
+                                <div class="log-controls">
+                                    <label>
+                                        <input type="checkbox" id="auto-scroll-log" checked>
+                                        自动滚动
+                                    </label>
+                                    <span id="selection-count">总计: 0 次</span>
+                                </div>
+                            </div>
+                            <div id="selection-log" class="selection-log">
+                                <div class="log-placeholder">暂无选择记录，请在其他应用中选择文本...</div>
+                            </div>
+                        </div>
+
+                        <div class="selection-stats">
+                            <h3>统计信息</h3>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <label>总选择次数:</label>
+                                    <span id="total-selections">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>最长文本:</label>
+                                    <span id="longest-text-length">0 字符</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>最常用应用:</label>
+                                    <span id="most-used-app">-</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>开始监听时间:</label>
+                                    <span id="monitoring-start-time">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 状态栏 -->
+        <footer class="app-footer">
+            <div class="status-info">
+                <span id="status-text">就绪</span>
+            </div>
+            <div class="footer-info">
+                Electron Demo v1.0.0
+            </div>
+        </footer>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html> 
